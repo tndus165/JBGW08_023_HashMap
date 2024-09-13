@@ -35,8 +35,8 @@ public class MyHashMap<K, V> implements IMap<K, V> {
     public boolean containsKey(K key) {
         int index = getIndex(key);
         HashNode<K, V> node = table[index];
-        while (node != null) {
-            if (Objects.equals(node.key, key)) {
+        while(node != null) {
+            if(Objects.equals(node.key, key)) {
                 return true;
             }
             node = node.next;
@@ -46,9 +46,9 @@ public class MyHashMap<K, V> implements IMap<K, V> {
 
     @Override
     public boolean containsValue(V value) {
-        for (HashNode<K, V> node : table) {
-            while (node != null) {
-                if (Objects.equals(node.value, value)) {
+        for(HashNode<K, V> node : table) {
+            while(node != null) {
+                if(Objects.equals(node.value, value)) {
                     return true;
                 }
                 node = node.next;
@@ -61,8 +61,8 @@ public class MyHashMap<K, V> implements IMap<K, V> {
     public V get(K key) {
         int index = getIndex(key);
         HashNode<K, V> node = table[index];
-        while (node != null) {
-            if (Objects.equals(node.key, key)) {
+        while(node != null) {
+            if(Objects.equals(node.key, key)) {
                 return node.value;
             }
             node = node.next;
@@ -77,21 +77,20 @@ public class MyHashMap<K, V> implements IMap<K, V> {
 
     @Override
     public V put(K key, V value) {
-        if (size >= table.length * LOAD_FACTOR) {
+        if(size >= table.length * LOAD_FACTOR) {
             resize();
         }
 
         int index = getIndex(key);
         HashNode<K, V> node = table[index];
-        while (node != null) {
-            if (Objects.equals(node.key, key)) {
+        while(node != null) {
+            if(Objects.equals(node.key, key)) {
                 V oldValue = node.value;
                 node.value = value;
                 return oldValue;
             }
             node = node.next;
         }
-
         node = new HashNode<>(key, value);
         node.next = table[index];
         table[index] = node;
@@ -104,11 +103,12 @@ public class MyHashMap<K, V> implements IMap<K, V> {
         int index = getIndex(key);
         HashNode<K, V> node = table[index];
         HashNode<K, V> prev = null;
-        while (node != null) {
-            if (Objects.equals(node.key, key)) {
-                if (prev != null) {
+        while(node != null) {
+            if(Objects.equals(node.key, key)) {
+                if(prev != null) {
                     prev.next = node.next;
-                } else {
+                }
+                else {
                     table[index] = node.next;
                 }
                 size--;
@@ -134,8 +134,8 @@ public class MyHashMap<K, V> implements IMap<K, V> {
         table = new HashNode[oldTable.length * 2];
         size = 0;
 
-        for (HashNode<K, V> node : oldTable) {
-            while (node != null) {
+        for(HashNode<K, V> node : oldTable) {
+            while(node != null) {
                 put(node.key, node.value);
                 node = node.next;
             }

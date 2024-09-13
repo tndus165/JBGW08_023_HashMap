@@ -27,21 +27,26 @@ class MyHashMapTest {
   @Test
   void testContainsKey() {
     map.put("one", 1);
+    map.put("two", 2);
     assertTrue(map.containsKey("one"));
-    assertFalse(map.containsKey("two"));
+    assertTrue(map.containsKey("two"));
+    assertFalse(map.containsKey("three"));
   }
   @Test
   void testContainsValue() {
     map.put("one", 1);
+    map.put("two", 2);
     assertTrue(map.containsValue(1));
-    assertFalse(map.containsValue(2));
+    assertTrue(map.containsValue(2));
+    assertFalse(map.containsValue(3));
   }
   @Test
   void testRemove() {
     map.put("one", 1);
+    map.put("two", 2);
     map.remove("one");
-    assertFalse(map.containsKey("one"));
     assertNull(map.get("one"));
+    assertEquals(2, map.get("two"));
   }
   @Test
   void testSize() {
@@ -52,6 +57,15 @@ class MyHashMapTest {
     assertEquals(2, map.size());
     map.remove("one");
     assertEquals(1, map.size());
+  }
+  @Test
+  void testResize() {
+    for(int i = 0; i < 20; i++) {
+      map.put("key" + i, i);
+    }
+    for(int i = 0; i < 20; i++) {
+      assertEquals(i, map.get("key" + i));
+    }
   }
   @Test
   void testIsEmpty() {
@@ -68,8 +82,9 @@ class MyHashMapTest {
     map.clear();
     assertTrue(map.isEmpty());
     assertEquals(0, map.size());
+    assertNull(map.get("one"));
+    assertNull(map.get("two"));
   }
-
   @BeforeEach
   void setUp() {
     map = new MyHashMap<>();
